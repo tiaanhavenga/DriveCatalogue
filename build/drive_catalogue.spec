@@ -4,7 +4,8 @@ from PyInstaller.building.build_main import Analysis, PYZ, EXE
 import os
 
 app_name = "DriveCatalogue"
-entry = "app.py"  # your PySide6 entrypoint
+# Point to app.py in repo root (spec lives in build/)
+entry = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'app.py'))
 
 hiddenimports = collect_submodules('PySide6') + [
     'PySide6.QtSvgWidgets', 'PySide6.QtPrintSupport'
@@ -12,7 +13,6 @@ hiddenimports = collect_submodules('PySide6') + [
 binaries = collect_dynamic_libs('PySide6')
 
 datas = [('assets', 'assets')]
-# Only add ffprobe if present
 if os.path.exists('ffmpeg/ffprobe.exe'):
     datas.append(('ffmpeg/ffprobe.exe', 'ffmpeg'))
 
